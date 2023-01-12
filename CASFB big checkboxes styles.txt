@@ -1,0 +1,124 @@
+https://communityactionprovo.org/2018-november-holiday-match-campaign/ 
+
+<style>
+
+div.radio {
+ position: relative;
+}
+
+/* This identifies all the labels of radio buttons only and styles the label text as text buttons */
+
+div.radio > label > span.label {
+ display: flex;
+ align-items: center;
+ padding: 10px 12px;
+ color: #ffffff;
+ font-size: 1rem;
+ text-transform: uppercase;
+ cursor: pointer;
+ transition: all 0.25s linear;
+ background-color: #F48931; 
+ border: solid 4px #F48931;
+ width: 100%;
+margin-top:-15px;
+ font-weight: bold;
+ min-width: 300px;
+border-radius: 3px;
+}
+
+/* hover state for those buttons*/
+div.radio > label > span.label:hover {
+background-color: #C15600; 
+border: solid 4px #C15600;
+} 
+
+/* hides the actual radio button */
+input[type=radio] {
+  opacity: 0;
+}
+
+/*Selects the spam directly after any radio type input (in this form's case the labels were inside spans, you could also use +label if that's not the case) and changes the style when that radio button is checked */
+
+input[type="radio"]:checked+span{ 
+background-color: #C15600 !important; 
+border: solid 4px #C15600 !important;
+} 
+
+/* Selects the span/label after the checkbox for monthly giving, and styles that text */
+input[type=checkbox]+span {
+ display: inline-block;
+ cursor: pointer;
+ transition: all 0.25s linear;
+ align-items: center;
+ padding: 10px 12px;
+ color: #000000;
+ font-size: 1rem;
+}
+
+/* Selects the span/label after the checkbox for monthly giving, and styles that text to be bold if the checkbox is checked */
+input[type=checkbox]:checked+span {
+ font-weight: bold;
+}
+
+/* Creates a faux checkbox that appears before the text for the monthly giving option */
+input[type=checkbox]+span:before {
+ transition-timing-function: cubic-bezier(.075, .820, .165, 1);
+ border: 4px solid;
+ border-radius: 0;
+ background-color: white;
+ border-color: transparent;
+ box-sizing: border-box;
+ color: #F48931;
+ content: close-quote;
+ display: inline-block;
+ height: 25px;
+ outline: 3px solid #F48931;
+ transition-duration: .5s;
+ transition-property: background-color, border-color;
+ width: 25px;
+ margin-left: -50px;
+ margin-right: 10px;
+ vertical-align: middle;
+}
+
+/* Styles that faux checkbox when option is checked  */
+input[type=checkbox]:checked+span:before {
+background-color: #C15600;
+ border-color: white;
+outline: 3px solid #C15600;
+}
+
+/* Hides the original checkbox */
+input[type=checkbox]
+{
+opacity:0;
+}
+
+/* Moves the other text area to be inside/on top of the Other button */
+.donation-form #other-amount {
+ width: 95px;
+ font-size: 1rem;
+ position: absolute;
+ margin: -18px 0px 0px -120px;
+}
+
+
+
+/* Adjustments made because the buttons were too wide for smaller phones */
+@media (max-width: 420px) {
+
+div.radio > label > span.label {
+font-size: 0.9rem;
+line-height: 50px;
+padding: 9px 9px;
+}
+
+.donation-form #other-amount {
+ width: 125px;
+ font-size: 1.3rem;
+ position: absolute;
+ margin: -20px 0px 0px 10px;
+}
+
+}
+</style>
