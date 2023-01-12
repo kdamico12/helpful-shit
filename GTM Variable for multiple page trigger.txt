@@ -1,0 +1,25 @@
+custom variable in order to trigger GTM on any of a selection of multiple pages: 
+
+https://www.simoahava.com/gtm-tips/gtmtips-test-multiple-urls-triggers/
+
+
+
+
+
+function() {
+  var urlsToTest = [
+    '/page/login.html',
+    '/login/',
+    '/my-account/',
+    'mydomain.com/users/signin/',
+    'mydomain.co.uk/en/profile/'
+  ];
+  
+  for (var i = 0; i < urlsToTest.length; i += 1) {  
+    if (document.location.href.indexOf(urlsToTest[i]) > -1) {
+      return true;
+    }
+  };
+
+  return false;
+}

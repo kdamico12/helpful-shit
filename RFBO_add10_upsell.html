@@ -1,0 +1,457 @@
+<!-- start DD_UPSELL_LIGHTBOX_010822_A embedded on donation form -->
+<!-- start pagebuilder DD_UPSELL_LIGHTBOX_010822_A -->
+<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+<script type="text/javascript"
+   src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/additional-methods.min.js"></script>
+
+<style type="text/css">
+    :root {
+        --lightbox-header-color: rgb(103,203,223);
+        --lightbox-cta-color: rgb(0,92,106);
+    }
+
+   div.responsive label.error {
+      color: var(--lightbox-header-color);
+   }
+
+   .lbbackdrop {
+      background-color: #000000 !important;
+      width: 3000px !important;
+      height: 3000px !important;
+      position: fixed !important;
+      left: 0px !important;
+      top: 0px !important;
+      zoom: 1 !important;
+      filter: alpha(opacity=85) !important;
+      opacity: 0.85 !important;
+      z-index: 3000 !important;
+      display: none;
+      overflow: scroll;
+   }
+
+   #scaled {
+    transform-origin: top center;
+   }
+
+   .lbContent * {
+      font-family: "Roboto Slab", serif !important;
+   }
+
+   .lbContent {
+      position: fixed !important;
+      z-index: 3001 !important;
+      background-color: transparent !important;
+      font-family: "Roboto Slab", serif !important;
+      width: 100% !important;
+      max-width: 30rem;
+      display: none;
+      top: 2vh;
+      left: calc((100vw - 30rem) / 2);
+   }
+
+   .lbContent p {
+        color: #786a65;
+        font-size: 1rem;
+        line-height: 125%;
+        font-weight: normal;
+        font-family: "Roboto Slab", serif !important;
+        padding: 0;
+        margin: 0;    
+        text-align: center;
+   }
+
+   .headlineContain {
+      background-color: var(--lightbox-header-color);
+      width: 100%;
+      font-weight: 700;
+      display: block;
+      text-align: center;
+      border-radius: 8px 8px 0px 0px;
+      -moz-border-radius: 8px 8px 0px 0px;
+      -webkit-border-radius: 8px 8px 0px 0px;
+      font-size: 1.8rem;
+      line-height: 110%;
+      padding: 1rem;
+      color: #fff;
+   }
+
+   .featureImg {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto !important;
+      border: 0;
+   }
+
+   .introContain {
+        display: block;
+        font-weight: 400;
+        padding: 1rem 3rem;    
+        background-color: #FFFFFF;
+   }
+
+    div.closeContain {
+        display: block;
+        width: 100%;
+    }
+
+    .yesButton, .noButton {
+        text-align: center;
+        margin: 0px auto;
+        margin-bottom: .9rem;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 4px;
+        color: #fff;
+        cursor: pointer;
+        padding: .4rem 1rem;
+        font-family: "Roboto Slab", serif !important;
+        font-size: 1.3rem;
+        line-height: 125%;
+        width: 70%;
+   }
+   
+   .yesButton {
+      background-color: var(--lightbox-cta-color);
+   }
+
+   .noButton {
+      background-color: #999999;
+   }
+
+    div.html-caption-container img.closeButton {
+        width: 2.7rem;
+        height: 2.7rem;
+        border: 0;
+        display: block;
+        position: absolute;
+        cursor: pointer;
+        right: 0;
+        top: 0;
+        margin: 0;
+    }
+
+   div.lowerButtonContain {
+      border-radius: 0 0 8px 8px;
+      -moz-border-radius: 0 0 8px 8px;
+      -webkit-border-radius: 0 0 8px 8px;
+      width: 100%;
+      display: block;
+      background-color: #FFFFFF;
+      padding: 1rem;
+   }
+
+   .amt_adjusted,
+   .amt_original {
+      display: inline;
+      font-size: inherit;
+   }
+
+   #lberrmsg {
+      display: block;
+      color: red;
+      font-weight: bold;
+      max-width: 300px;
+      margin: 10px;
+      font-size: 13px;
+      position: relative;
+      left: 0px;
+   }
+
+   /* start mobile styles */
+   @media (max-width:682px) {
+
+        /* smartphones, iPhone, portrait 480x320 phones */
+        
+        .lbContent {
+            top: 5vh;
+            left: 5vw;
+            max-height: 90vh;
+            max-width: 90vw;
+        }
+        .featureImg {
+            max-width: 90vw;
+        }
+        .headlineContain {
+            font-size: 1.4rem;
+        }
+
+        .yesButton,
+        .noButton {
+            font-size: 1rem;
+            width: 85%;
+        }
+   }
+</style>
+
+<script type="text/javascript">
+   jQuery(document).ready(function () {
+      jQuery('#responsive_payment_typepay_typeradiocredit').closest('.internal-payment').on('click', function () {
+         jQuery('#payment_cc_container').show();
+      });
+      jQuery('#responsive_payment_typepay_typeradiopaypal').closest('.external-payment').on('click', function () {
+         jQuery('#payment_cc_container').hide();
+      });
+
+      // swap donate button with pseudo button
+      jQuery("#pstep_finish").hide();
+
+      var tsmInitialSelectedAmount = "";
+      var tsmInitialSelected = $('input[name=level_standardexpanded]:checked').closest('.form-input').find('.donation-level-amount-container');
+      if (tsmInitialSelected.length > 0) {
+         tsmInitialSelectedAmount = tsmInitialSelected.text();
+      } else {
+         tsmInitialSelectedAmount = $('input[name=level_standardexpanded]:checked').closest('.form-input').find('.donation-level-user-entered input').val();
+      }
+      jQuery("div.button-sub-container").prepend("<button class=\"step-button action-button finish-step\" type=\"button\" id=\"pstep_upgrade\" name=\"pstep_upgrade\" value=\"Process\" onClick=\"susUpgrade();\">Donate " + tsmInitialSelectedAmount.replace(".00", "") + " to Fight Hunger</button>");
+
+      // hide lb error display
+      jQuery("#lberrmsg").hide();
+
+      // hide custom field for lb reporting
+      jQuery("input[name='upsell_monthly_donation_radio']").closest("div.custom-field-container.form-row").hide();
+
+   });
+
+   function clickyes() {
+      // get the suggested one-time value
+      var getSuggAmt = jQuery("div.amt_adjusted").html();
+      var cleanSuggAmt = getSuggAmt.replace(/[^0-9.]/g, '');
+      var numSuggAmt = parseInt(cleanSuggAmt);
+
+      // check other amount level
+      jQuery("div.donation-level-container input[type='radio']:last").click();
+
+      // change donation amount
+      jQuery("div.donation-level-user-entered input").val(numSuggAmt);
+
+      /*    // check the monthly option
+         jQuery("#level_standardauto_repeatname").prop("checked",true);
+         jQuery("#tsm--select-once").addClass("tsm--gift-type-selected")
+         jQuery("#tsm--select-monthly").removeClass("tsm--gift-type-selected"); */
+
+      // hide the lightbox in case there are any server errors that come back
+      jQuery(".lbbackdrop").hide();
+      jQuery(".lbContent").hide();
+
+      // check for new upsell tracking field
+      var checkForLBTracking = jQuery("#upsell_monthly_donation_radio").length;
+      if (checkForLBTracking > 0) {
+         // show that the donation was a monthly upsell
+         jQuery("#upsell_monthly_donation_radio").prop("checked", true);
+      }
+      else {
+         // do nothing
+      }
+
+      // submit the form
+      jQuery("#pstep_finish").click();
+   }
+
+   function clickno() {
+      // hide the lightbox in case there are any server errors that come back
+      jQuery(".lbbackdrop").hide();
+      jQuery(".lbContent").hide();
+
+      jQuery("#level_standardauto_repeatname").prop("checked", false);
+      jQuery("#tsm--select-once").removeClass("tsm--gift-type-selected")
+      jQuery("#tsm--select-monthly").addClass("tsm--gift-type-selected");
+
+      // submit form as intended without upsell
+      jQuery("#pstep_finish").click();
+   }
+
+   function centerStuff() {
+      var getW = window.innerWidth;
+      var getH = window.innerHeight;
+
+      var contentW = jQuery(".lbContent").width();
+      var contentH = jQuery(".lbContent").height();
+
+      if (getW > contentW) {
+         var diffW = getW - contentW;
+         var halfDiffW = diffW / 2;
+         jQuery(".lbContent").css("left", halfDiffW);
+      }
+      else {
+         jQuery(".lbContent").css("left", "0");
+      }
+      jQuery(".lbContent").css("top", "0");
+
+   }
+
+   function checkBeforeToggle() {
+
+      var billFN = jQuery("#billing_first_namename").val();
+      var billLN = jQuery("#billing_last_namename").val();
+      var billAddOne = jQuery("#billing_addr_street1name").val();
+      var billAddCity = jQuery("#billing_addr_cityname").val();
+      var billAddState = jQuery("#billing_addr_state").val();
+      var billAddZip = jQuery("#billing_addr_zipname").val();
+      var donorEmailAdd = jQuery("#donor_email_addressname").val();
+      var paymentType = jQuery('[name="responsive_payment_typepay_typeradio"]:checked').val();
+      var ccNum = jQuery("#responsive_payment_typecc_numbername").val();
+      var cvvNum = jQuery("#responsive_payment_typecc_cvvname").val();
+
+      if (billFN == null || billFN == "" || billLN == null || billLN == "" || billAddOne == null || billAddOne == "" || billAddCity == null || billAddCity == "" || billAddState == null || billAddState == "" || billAddZip == null || billAddZip == "" || donorEmailAdd == null || donorEmailAdd == "" || (paymentType == 'credit' && (ccNum == null || ccNum == "" || cvvNum == null || cvvNum == ""))) {
+         // alert("Please complete all required fields.");
+
+         jQuery("#lberrmsg").prependTo("div.button-sub-container");
+         jQuery("#lberrmsg").html("Please complete all required fields.");
+         jQuery("#lberrmsg").show();
+
+         return false;
+      }
+      else {
+         return true;
+      }
+
+   }
+
+   function susUpgrade() {
+      /* Executes when the upgrade donation button is clicked.
+         Retrieves the selected donation option and sends it to assembleSelected.
+         Determines whether the upgrade popup triggers.*/
+      if (jQuery('form#ProcessForm').valid()) {
+         // scan gift type
+         var gTypeSingle = jQuery("#tsm--select-once").hasClass("tsm--gift-type-selected");
+         var gTypeMonthly = jQuery("#tsm--select-monthly").hasClass("tsm--gift-type-selected");
+
+         if (gTypeMonthly == true && gTypeSingle == false) {
+            // process normally if user has pre-selected a monthly gift type
+            jQuery("#pstep_finish").click();
+         }
+         else if (gTypeMonthly == false && gTypeSingle == true) {
+            // go through upsell validation process if single is selected
+            var preVal = checkBeforeToggle();
+            if (preVal == false) {
+               // do nothing
+               return false;
+            }
+            else if (preVal == true) {
+
+               // get the level ids in a dynamic way
+               var levelIds = [];
+
+               jQuery("div.donation-levels input[type='radio']").each(function (index) {
+                  getId = jQuery(this).attr("id");
+                  levelIds.push(getId);
+               });
+
+               var numberOfLevels = levelIds.length;
+
+               for (var i = 0; i < numberOfLevels; i++) {
+                  if (jQuery("#" + levelIds[i]).is(':checked')) {
+                     selectedLevel = jQuery("#" + levelIds[i]).val();
+                     checkBeforeToggle();
+                     assembleSelected(selectedLevel);
+                  }
+               }
+            }
+         }
+         else {
+            // process normally if gift type is unknown
+            jQuery("#pstep_finish").click();
+         }
+      }
+   }
+
+   function assembleSelected(a) {
+        //    receives the id of the selected donation option from susUpgrade,
+        //    then uses that to determine which child associated with that option
+        //    contains the dollar value of the donation, then sends that value to
+        //    calcMonthly to update the values in the upgrade popup.
+        var forValue = "level_standardexpanded" + a;
+        var forOtherValue = "level_standardexpanded" + a + "amount";
+        var getLabel = jQuery("label[for=" + forValue + "] div.donation-level-amount-container").html();
+        if (typeof getLabel === "undefined") {
+            otherLabel = jQuery("#" + forOtherValue).val();
+            if (otherLabel == "" || otherLabel == undefined || otherLabel == null) {
+                alert("Please enter a gift amount.");
+            }
+            else {
+                var cleanLabel = otherLabel.replace(/[^0-9.]/g, '');
+                var numLabel = Number(cleanLabel);
+                calcMonthly(numLabel);
+            }
+        }
+        else {
+            var cleanLabel = getLabel.replace(/[^0-9.]/g, '');
+            var numLabel = Number(cleanLabel);
+            calcMonthly(numLabel);
+        }
+    }
+
+   function calcMonthly(b) {
+
+      if (b > 1000) {
+         // submit donation without upsell ask if greater than 1000
+         jQuery("#pstep_finish").click();
+      }
+      else {
+         var suggamt = b + 10.0;
+         var suggamtround = suggamt.toFixed(0);
+
+         resizeLB();
+
+         jQuery(".amt_adjusted").html("$" + suggamtround);
+         jQuery(".amt_original").html("$" + b);
+         
+         jQuery("#lberrmsg").hide();
+         jQuery(".lbbackdrop").show();
+         jQuery(".lbContent").show();
+
+      }
+   }
+
+    function resizeLB() {
+            var lb = jQuery("#scaled");
+            var vp = jQuery(window);
+
+            var Xscale = vp.width()/lb.outerWidth(true);
+            var Yscale = vp.height()/lb.outerHeight(true);
+            
+            if (Xscale < 1) {
+                lb.css("transform", "scale(" + Xscale + ")");
+            }
+            if (Yscale < 1) {
+                lb.css("transform", "scale(" + Yscale + ")");
+            }
+
+            
+    };
+
+    jQuery(window).ready(resizeLB);
+    jQuery(window).resize(resizeLB);
+
+</script>
+<!-- end DD_UPSELL_LIGHTBOX css, scripts -->
+<!-- start DD_UPSELL_LIGHTBOX html -->
+<div id="lberrmsg"></div>
+<div class="lbbackdrop" onClick="clickno();"></div>
+<div class="lbContent" id="scaled">
+    <div class="closeContain">
+        <a href="javascript:void(0);" onClick="clickno();"><img class="closeButton"
+            src="https://secure2.convio.net/chfdc/images/content/pagebuilder/DCC_UpsellLightbox_r3-close.png" /></a>
+    </div>
+    <div class="headlineContain">
+        The&nbsp;Regional&nbsp;Food&nbsp;Bank &#8203;Turns&nbsp;40&nbsp;in&nbsp;2020!
+    </div>
+    <img alt="Mother holding daughter at food bank" class="featureImg"
+        src="https://secure3.convio.net/rfbo/images/content/pagebuilder/Tenessa.jpg?t=1583357956896" />
+    <div class="introContain">
+        <p>Celebrate our anniversary by donating an extra&nbsp;$10&nbsp;today. <br><strong>Your additional $10 gift will provide 40 meals to
+            children and families in Oklahoma who are facing&nbsp;hunger.</strong></p>
+    </div>
+    <div class="lowerButtonContain">
+        <!-- start yes button -->
+        <div class="yesButton" href="javascript:void(0);" onClick="clickyes();">Yes,&nbsp;I'll&nbsp;add&nbsp;<strong>$10</strong> and&nbsp;give&nbsp;<strong><div class="amt_adjusted">X</div></strong>&nbsp;today!
+        </div>
+        <!-- end yes button -->
+        <div class="noButton" href="javascript:void(0);" onClick="clickno();">No&nbsp;thanks,&nbsp;please&nbsp;process my&nbsp;original&nbsp;gift&nbsp;of&nbsp;<div class="amt_original">X</div>.</div>
+    </div>
+</div>
+<!-- end DD_UPSELL_LIGHTBOX_010822_A pagebuilder -->
+
+<!-- end DD_UPSELL_LIGHTBOX_010822_A embedded on donation form -->
+<!-- updated 3/18/2020 -->

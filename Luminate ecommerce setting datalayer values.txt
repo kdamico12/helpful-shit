@@ -1,0 +1,43 @@
+<!-- START datalayer variables -->
+<script>
+var giftAmount = "[[S120:dc:giftAmount]]";
+   //gets rid of dollar sign
+   giftAmount = giftAmount.replace("$", "");
+
+
+</script>
+
+<script>
+    window.dataLayer = window.dataLayer || []
+    dataLayer.push({
+        'donorFirstname': '[[S120:dc:donorFirstName]]',
+        'donorLastname': '[[S120:dc:donorLastName]]',
+        'donorStreet': '[[S120:dc:donorStreet1]]',
+        'donorCity': '[[S120:dc:donorCity]]',
+        'donorRegion': '[[S120:dc:donorState1]]',
+        'donorCountry': '[[S120:dc:donorCountry]]',
+        'donorZip': '[[S120:dc:donorZip]]',
+        'donorPhone': '[[S120:dc:phone]]',
+        'donorEmail': '[[S120:dc:email]]',
+        'transactionId': '[[S120:dc:transactionID]]',
+        'transactionAffiliation': 'k9s',
+        'transactionTotal': giftAmount,
+        'transactionTax': 0.00,
+        'transactionShipping': 0.00,
+        'transactionProducts': [{
+            'sku': '[[S120:dc:campaignName]]',
+            'name': '[[S120:dc:donationFormName]]',
+            'category': '[[?xx::x[[S120:dc:recurringFrequencyUnit]]x::single-donation::[[S120:dc:recurringFrequencyUnit]]]]',
+            'price': giftAmount,
+            'quantity': 1
+        }, {
+            'sku': '[[S120:dc:campaignName]]',
+            'name': '[[S120:dc:donationFormName]]',
+            'category': '[[?xx::x[[S120:dc:recurringFrequencyUnit]]x::single-donation::[[S120:dc:recurringFrequencyUnit]]]]',
+            'price': giftAmount,
+            'quantity': 1
+        }]
+    });
+</script>
+
+<!-- END datalayer variables -->
